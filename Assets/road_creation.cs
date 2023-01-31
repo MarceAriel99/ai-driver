@@ -13,8 +13,8 @@ public class road_creation : MonoBehaviour
 
         // generate random road with 10 nodes and 10 segments within 100x100 area
         GameObject road = rs.AddRoad();
-        Road r = road.GetComponent<Road>();
-        r.GenerateRoad(10, 10, 100, 100);
+        //Road r = road.GetComponent<Road>();
+        //r.GenerateRoad(10, 10, 100, 100);
 
         
     }
