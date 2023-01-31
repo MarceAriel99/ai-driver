@@ -8,27 +8,12 @@ public class CheckpointTriggerer : MonoBehaviour
     // points counter variable
     public int points = 0;
 
-    // checkpoint trigger only if sequence is correct
     private void OnTriggerEnter(Collider other)
     {
-        // get Checkpoints GameObject
-        GameObject checkpoints = GameObject.Find("Checkpoints");
-        // get Checkpoints children
-        GameObject[] checkpointsChildren = checkpoints.GetComponentsInChildren<GameObject>(); // FIXME: anda mal 
-        // print checkpoints children
-        Debug.Log(checkpointsChildren);
-        foreach (GameObject checkpoint in checkpointsChildren)
+        // sums points only if the object that enters the trigger is a checkpoint and it accords to the points counter
+        if (other.gameObject.tag == "Checkpoint" && other.gameObject.name == "Checkpoint (" + points + ")") 
         {
-            Debug.Log(checkpoint);
-        }
-        // check if sequence is correct
-        if (other.gameObject == checkpointsChildren[points])
-        {
-            // increase points
             points++;
-            Debug.Log( "Checkpoint " + points + " reached!" );
-            // destroy checkpoint
-            Destroy(other.gameObject);
         }
     }
 
