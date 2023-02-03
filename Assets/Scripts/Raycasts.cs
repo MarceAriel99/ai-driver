@@ -14,7 +14,7 @@ public class Raycasts : MonoBehaviour
     void FixedUpdate()
     {
         // set raycast origin to car's center of mass
-        Vector3 origin = car.transform.position;
+        Vector3 origin = car.transform.position + new Vector3(0, 0.5f, 0);
         // set raycast directions to car's N NE E SE S SW W NW
         Vector3[] directions = new Vector3[8];
         directions[0] = car.transform.forward;
@@ -26,26 +26,41 @@ public class Raycasts : MonoBehaviour
         directions[6] = -car.transform.right;
         directions[7] = -car.transform.right + car.transform.forward;
 
-        float length = 20f;
-        RaycastHit[] hits = new RaycastHit[8];
+        // Normalize directions
+        for (int i = 0; i < 8; i++)
+        {
+            directions[i] = directions[i].normalized;
+        }
+
+        float length = 50f;
+        bool raycast_hitted = false;
 
         // iterate from 0 to 7
         for (int i = 0; i < 8; i++)
         {
-            // cast ray 
-            if (Physics.Raycast(origin, directions[i], out hits[i], length) && hits[i].collider.gameObject.tag == "Wall") // TODO: add more tags for other cars
-            {
-                Debug.DrawRay(origin, directions[i] * hits[i].distance, Color.yellow);
-                Debug.Log("Did Hit " + hits[i].collider.gameObject.name + " at " + hits[i].point + " with distance " + hits[i].distance + " and tag " + hits[i].collider.gameObject.tag + "");
-            }
-            else
-            {
-                Debug.DrawRay(origin, directions[i] * length, Color.white);
-                Debug.Log("Did not Hit");
-            }
-            // TODO: collect data and send to neural network
-        }
-        
+            RaycastHit hit;
 
+            // Cast ray 
+            raycast_hitted =  Physics.Raycast(origin, directions[i], out hit, length);
+
+            // TODO: send data to neural network
+            
+            // Debug raycasts
+            //DebugRaycast(origin, directions[i], length, hit, i, raycast_hitted);
+        }
+    }
+
+    private void DebugRaycast(Vector3 origin, Vector3 direction, float length, RaycastHit hit, int raycast_number, bool raycast_hitted)
+    {
+        if (raycast_hitted && hit.collider.gameObject.tag == "Wall")
+        {
+            Debug.DrawRay(origin, direction * hit.distance, Color.yellow);
+            Debug.Log("Raycast number " + raycast_number + " did hit " + hit.collider.gameObject.name + " at " + hit.point + " with distance " + hit.distance + " and tag " + hit.collider.gameObject.tag);
+        }
+        else
+        {
+            Debug.DrawRay(origin, direction * length, Color.white);
+            Debug.Log("Raycast number " + raycast_number + " did not hit anything");
+        }
     }
 }
