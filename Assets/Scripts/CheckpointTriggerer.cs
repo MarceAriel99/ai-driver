@@ -10,8 +10,12 @@ public class CheckpointTriggerer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // get list of all checkpoints
+        GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        Debug.Log(other.gameObject.name);
+        
         // sums points only if the object that enters the trigger is a checkpoint and it accords to the points counter
-        if (other.gameObject.tag == "Checkpoint" && other.gameObject.name == "Checkpoint (" + points + ")") 
+        if (other.gameObject.tag == "Checkpoint" && other.gameObject == checkpoints[points])
         {
             points++;
         }
