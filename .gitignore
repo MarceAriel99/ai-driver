@@ -102,3 +102,6 @@ $RECYCLE.BIN/
 
 # Python Virtual environment
 /venv
+
+# Fake
+.fake
