@@ -99,3 +99,6 @@ $RECYCLE.BIN/
 
 # Vscode settings
 .vscode/settings.json
+
+# Python Virtual environment
+/venv
