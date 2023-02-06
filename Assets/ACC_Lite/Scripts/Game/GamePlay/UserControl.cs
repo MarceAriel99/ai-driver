@@ -31,6 +31,6 @@ public class UserControl :MonoBehaviour
 		Brake = Input.GetButton ("Jump");
 
 		//Apply control for controlled car.
-		ControlledCar.UpdateControls (Horizontal, Vertical, Brake);
+		ControlledCar.UpdateControls (Vertical, Horizontal, Brake);
 	}
 }
