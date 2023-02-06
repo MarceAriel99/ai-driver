@@ -17,9 +17,6 @@ public class DriveAgent : Agent
 
     public GameObject startPoint;
 
-    public bool has_touched_wall = false;
-    float wall_stuck_timer = 0f;
-
     void Start()
     {
         car = this.gameObject;
@@ -40,33 +37,20 @@ public class DriveAgent : Agent
         AddReward(1f);
     }
 
+    public void LapCompleted()
+    {
+        Debug.Log("Lap completed");
+        AddReward(50f);
+        EndEpisode();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
             Debug.Log("Wall hit");
-            has_touched_wall = true;
             AddReward(-20f);
             EndEpisode();
-        }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-        {
-            Debug.Log("Wall hit stay");
-            AddReward(-0.1f);
-            wall_stuck_timer += Time.deltaTime;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-        {
-            Debug.Log("Wall hit exit");
-            wall_stuck_timer = 0f;
         }
     }
     
@@ -84,27 +68,26 @@ public class DriveAgent : Agent
             AddReward(-0.1f);
         }
 
-        if (rb.velocity.magnitude > 1.5f)
-        {
-            AddReward(0.001f);
+        if (rb.velocity.magnitude > 1f)
+        {   
+            float reward_multiplier = 0.015f;
+            float reward = rb.velocity.magnitude * reward_multiplier;
+
+            if (reward > reward_multiplier * 15)
+            {
+                reward = reward_multiplier * 15;
+            }
+
+            AddReward(reward);
         }
 
-        if (!has_touched_wall)
+        if (carController.CurrentAcceleration < 0)
         {
-            AddReward(0.05f);
+            AddReward(-0.01f);
         }
 
-        if (carController.CurrentAcceleration > 0)
-        {
-            //AddReward(0.0001f);
-        }
-
-        if (wall_stuck_timer > 5f)
-        {
-            Debug.Log("Stuck in wall");
-            AddReward(-5f);
-            EndEpisode();
-        }
+        // For every frame the car is alive, give it a small penalty so it learns to finish the track faster
+        AddReward(-0.040f);
     }
     
     public override void OnEpisodeBegin()
@@ -114,7 +97,6 @@ public class DriveAgent : Agent
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         this.CheckpointTriggerer.points = 0;
-        has_touched_wall = false;
         Debug.ClearDeveloperConsole();
     }
 

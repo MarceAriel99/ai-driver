@@ -2,31 +2,58 @@
     "Drive": {
         "checkpoints": [
             {
-                "steps": 499944,
-                "file_path": "results\\ppo\\Drive\\Drive-499944.onnx",
-                "reward": 419.3195118904114,
-                "creation_time": 1675648798.6163094,
+                "steps": 3924055,
+                "file_path": "results\\ppo\\Drive\\Drive-3924055.onnx",
+                "reward": 283.2680321633816,
+                "creation_time": 1675655293.855519,
                 "auxillary_file_paths": [
-                    "results\\ppo\\Drive\\Drive-499944.pt"
+                    "results\\ppo\\Drive\\Drive-3924055.pt"
                 ]
             },
             {
-                "steps": 785054,
-                "file_path": "results\\ppo\\Drive\\Drive-785054.onnx",
-                "reward": 635.9516014575959,
-                "creation_time": 1675649136.6150813,
+                "steps": 3999983,
+                "file_path": "results\\ppo\\Drive\\Drive-3999983.onnx",
+                "reward": 771.7262287139893,
+                "creation_time": 1675655414.7224987,
                 "auxillary_file_paths": [
-                    "results\\ppo\\Drive\\Drive-785054.pt"
+                    "results\\ppo\\Drive\\Drive-3999983.pt"
+                ]
+            },
+            {
+                "steps": 4131213,
+                "file_path": "results\\ppo\\Drive\\Drive-4131213.onnx",
+                "reward": 497.07989406585693,
+                "creation_time": 1675655557.6033232,
+                "auxillary_file_paths": [
+                    "results\\ppo\\Drive\\Drive-4131213.pt"
+                ]
+            },
+            {
+                "steps": 4499950,
+                "file_path": "results\\ppo\\Drive\\Drive-4499950.onnx",
+                "reward": 183.34730672836304,
+                "creation_time": 1675656701.9245582,
+                "auxillary_file_paths": [
+                    "results\\ppo\\Drive\\Drive-4499950.pt"
+                ]
+            },
+            {
+                "steps": 4668677,
+                "file_path": "results\\ppo\\Drive\\Drive-4668677.onnx",
+                "reward": 403.8554973602295,
+                "creation_time": 1675656904.1086752,
+                "auxillary_file_paths": [
+                    "results\\ppo\\Drive\\Drive-4668677.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 785054,
+            "steps": 4668677,
             "file_path": "results\\ppo\\Drive.onnx",
-            "reward": 635.9516014575959,
-            "creation_time": 1675649136.6150813,
+            "reward": 403.8554973602295,
+            "creation_time": 1675656904.1086752,
             "auxillary_file_paths": [
-                "results\\ppo\\Drive\\Drive-785054.pt"
+                "results\\ppo\\Drive\\Drive-4668677.pt"
             ]
         }
     },

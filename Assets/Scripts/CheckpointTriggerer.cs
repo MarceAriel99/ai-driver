@@ -21,6 +21,11 @@ public class CheckpointTriggerer : MonoBehaviour
         {
             // add reward to the agent
             points++;
+            if (points == checkpoints.Length)
+            {
+                points = 0;
+                driveAgent.LapCompleted();
+            }
             driveAgent.onCheckpointReached();
         }
     }
