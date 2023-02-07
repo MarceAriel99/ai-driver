@@ -34,7 +34,7 @@ public class DriveAgent : Agent
     public void onCheckpointReached()
     {
         Debug.Log("Checkpoint reached");
-        AddReward(1f);
+        AddReward(3f);
     }
 
     public void LapCompleted()
@@ -49,45 +49,68 @@ public class DriveAgent : Agent
         if (collision.gameObject.tag == "Wall")
         {
             Debug.Log("Wall hit");
-            AddReward(-20f);
+            AddReward(-100f);
             EndEpisode();
         }
     }
     
     private void FixedUpdate()
     {
+        DetectBackwardsDriving(-0.1f, false);
+        DetectCarStopped(-0.1f, false);
+        DetectSpeeding(0.012f, false, 22f);
+        //DetectBraking(-0.001f);
+
+        // For every frame the car is alive, give it a small penalty so it learns to finish the track faster
+        AddReward(-0.18f);
+    }
+
+    private void DetectBackwardsDriving(float reward, bool ends_episode = false)
+    {
         if (Vector3.Dot(car.transform.forward, rb.velocity) < 0)
         {
             Debug.Log("Backwards driving");
-            AddReward(-0.1f);
+            AddReward(reward);
+            if (ends_episode)
+            {
+                EndEpisode();
+            }
         }
+    }
 
-        if (rb.velocity.magnitude < 0.1f)
+    private void DetectCarStopped(float reward, bool ends_episode = false)
+    {
+        if (rb.velocity.magnitude < 0.05f)
         {
-            Debug.Log("Stopped");
-            AddReward(-0.1f);
+            Debug.Log("Car stopped");
+            AddReward(reward);
+            if (ends_episode)
+            {
+                EndEpisode();
+            }
         }
+    }
 
-        if (rb.velocity.magnitude > 1f)
-        {   
-            float reward_multiplier = 0.015f;
+    private void DetectSpeeding(float reward_multiplier, bool ends_episode = false, float threshold = 20f)
+    {
+        if (rb.velocity.magnitude > threshold)
+        {
             float reward = rb.velocity.magnitude * reward_multiplier;
 
-            if (reward > reward_multiplier * 15)
+            if (reward > reward_multiplier * threshold)
             {
-                reward = reward_multiplier * 15;
+                reward = reward_multiplier * threshold;
             }
-
             AddReward(reward);
         }
+    }
 
+    private void DetectBraking(float reward)
+    {
         if (carController.CurrentAcceleration < 0)
         {
-            AddReward(-0.01f);
+            AddReward(reward);
         }
-
-        // For every frame the car is alive, give it a small penalty so it learns to finish the track faster
-        AddReward(-0.040f);
     }
     
     public override void OnEpisodeBegin()
