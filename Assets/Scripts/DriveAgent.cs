@@ -23,6 +23,8 @@ public class DriveAgent : Agent
         carController = GetComponent<CarController>();
         rb = GetComponent<Rigidbody>();
         CheckpointTriggerer = GetComponent<CheckpointTriggerer>();
+        // random start position from the list of start points
+        //startPoint = GameObject.FindGameObjectsWithTag("StartPoint")[Random.Range(0, GameObject.FindGameObjectsWithTag("StartPoint").Length)];
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -128,6 +130,6 @@ public class DriveAgent : Agent
         float forwardAmount = actions.ContinuousActions[0];
         float turnAmount = actions.ContinuousActions[1];
 
-        carController.UpdateControls(forwardAmount, turnAmount, false);
+        carController.UpdateControls(forwardAmount, turnAmount, false); //TODO: add brake control
     }
 }
