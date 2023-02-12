@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
+//[ExecuteInEditMode]
 public class wall_colliders : MonoBehaviour
 {
     public GameObject road;
@@ -12,10 +15,22 @@ public class wall_colliders : MonoBehaviour
 
     public GameObject wall;
 
+    private string prefabPath;
+
+
+
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        // Get the Path to Prefab
+        prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(wall);
         getMeshEdges();
+
+        #if UNITY_EDITOR
+        /// The fix is to change the 'Save' call to MarkSceneDirty() as answered by @Ron. 
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+        #endif
     }
 
     class Triangle {
@@ -106,14 +121,22 @@ public class wall_colliders : MonoBehaviour
 
     void instanceWall(Edge edge)
     {
-        Vector3 wallPosition = (edge.v1 + edge.v2) / 2;
+        // Load Prefab Asset as Object from path
+        Object _newWall = AssetDatabase.LoadAssetAtPath(prefabPath, typeof(Object));
+
+        Vector3 wallPosition = (edge.v1 + edge.v2) / 2 + new Vector3(0, (wallHeight / 2) - 0.1f, 0);
         Vector3 wallScale = new Vector3(wallWidth, wallHeight, Vector3.Distance(edge.v1, edge.v2));
 
         Quaternion wallRotation = Quaternion.FromToRotation(Vector3.forward, edge.v2 - edge.v1);
 
-        GameObject wallInstance = Instantiate(wall, wallPosition, wallRotation);
+        GameObject _newWallInstance = PrefabUtility.InstantiatePrefab(_newWall) as GameObject;
 
-        wallInstance.transform.localScale = wallScale;
+        _newWallInstance.transform.position = wallPosition;
+        _newWallInstance.transform.rotation = wallRotation;
+        _newWallInstance.transform.localScale = wallScale;
+
+        //GameObject wallInstance = Instantiate(wall, wallPosition, wallRotation);
+        //wallInstance.transform.localScale = wallScale;
         //wallInstance.transform.localEulerAngles = new Vector3(0, 0, 0);
     }
 }

@@ -85,7 +85,8 @@ public class CarController :MonoBehaviour
 	public int CarDirection { get { return CurrentSpeed < 1 ? 0 : (VelocityAngle < 90 && VelocityAngle > -90 ? 1 : -1); } }
 
 	float CurrentSteerAngle;
-	float CurrentAcceleration;
+	// Made public for the neural network to see
+	public float CurrentAcceleration;
 	float CurrentBrake;
     bool InHandBrake;
 
@@ -146,7 +147,7 @@ public class CarController :MonoBehaviour
 	/// <param name="horizontal">Turn direction</param>
 	/// <param name="vertical">Acceleration</param>
 	/// <param name="brake">Brake</param>
-	public void UpdateControls (float horizontal, float vertical, bool handBrake)
+	public void UpdateControls (float vertical, float horizontal, bool handBrake)
 	{
 		float targetSteerAngle = horizontal * MaxSteerAngle;
 
