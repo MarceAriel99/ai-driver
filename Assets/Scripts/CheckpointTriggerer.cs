@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 
@@ -10,12 +11,15 @@ public class CheckpointTriggerer : MonoBehaviour
 
     public DriveAgent driveAgent;
 
-    private void OnTriggerEnter(Collider other)
+    public GameObject[] checkpoints;
+
+    void Start()
     {
-        // get list of all checkpoints
-        GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        //Debug.Log(other.gameObject.name);
-        
+        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {      
         // sums points only if the object that enters the trigger is a checkpoint and it accords to the points counter
         if (other.gameObject.tag == "Checkpoint" && other.gameObject == checkpoints[points])
         {
@@ -28,17 +32,6 @@ public class CheckpointTriggerer : MonoBehaviour
             }
             driveAgent.onCheckpointReached();
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 }
