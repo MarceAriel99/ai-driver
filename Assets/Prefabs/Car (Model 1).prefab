@@ -5857,10 +5857,8 @@ GameObject:
   - component: {fileID: 7631010196088761983}
   - component: {fileID: 7630376149284509371}
   - component: {fileID: 7630931723570206935}
-  - component: {fileID: 7630945166430785003}
   - component: {fileID: 7589108531256273727}
   - component: {fileID: 7630376149284509364}
-  - component: {fileID: 7630376149284509365}
   - component: {fileID: 7630376149284509360}
   - component: {fileID: 7630376149284509367}
   - component: {fileID: 7630376149284509366}
@@ -6070,18 +6068,6 @@ MonoBehaviour:
   SlipSource: {fileID: 7588594659634199471}
   MinSlipSound: 0.15
   MaxSlipForSound: 1
---- !u!114 &7630945166430785003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7527624535538174063}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeb67c03a9a7bb745b02d885278296b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &7589108531256273727
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6104,21 +6090,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: 0
   driveAgent: {fileID: 7630376149284509367}
---- !u!114 &7630376149284509365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7527624535538174063}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1108ea4ebc9be49a924519b7c49e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  show_raycast_line: 1
-  debug_raycast_console: 0
-  length: 150
 --- !u!114 &7630376149284509360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6167,7 +6138,6 @@ MonoBehaviour:
   MaxStep: 12000
   CheckpointTriggerer: {fileID: 0}
   startPoint: {fileID: 0}
-  has_touched_wall: 0
 --- !u!114 &7630376149284509366
 MonoBehaviour:
   m_ObjectHideFlags: 0

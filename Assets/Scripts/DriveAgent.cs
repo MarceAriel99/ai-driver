@@ -132,4 +132,11 @@ public class DriveAgent : Agent
 
         carController.UpdateControls(forwardAmount, turnAmount, false); //TODO: add brake control
     }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var continuousActionsOut = actionsOut.ContinuousActions;
+        continuousActionsOut[0] = Input.GetAxis("Vertical");
+        continuousActionsOut[1] = Input.GetAxis("Horizontal");
+    }
 }
