@@ -13,9 +13,18 @@ public class CheckpointTriggerer : MonoBehaviour
 
     public GameObject[] checkpoints;
 
+    public float distanceToNextCheckpoint;
+
     void Start()
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        driveAgent = GetComponent<DriveAgent>();
+    }
+
+    void FixedUpdate()
+    {
+        // distance to next checkpoint
+        distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[points].transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,8 +39,7 @@ public class CheckpointTriggerer : MonoBehaviour
                 points = 0;
                 driveAgent.LapCompleted();
             }
-            driveAgent.onCheckpointReached();
+            driveAgent.OnCheckpointReached();
         }
-        
     }
 }

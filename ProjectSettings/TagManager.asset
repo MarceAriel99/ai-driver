@@ -8,6 +8,7 @@ TagManager:
   - Checkpoint
   - Wall
   - Ground
+  - Track
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
+  - Wall
+  - Track
   - 
   - 
   - 
