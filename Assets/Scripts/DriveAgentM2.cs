@@ -20,22 +20,40 @@ public class DriveAgentM2 : DriveAgent
     {
         // Add rewards for every step
 
+        // rewards for going forward
+        if (rb.velocity.z > 0)
+        {
+            AddReward(0.05f);
+        }
+
+        // rewards for position on the race
+        AddReward(0.01f * currentPositionNormalized);
+
+        // rewards for being on the track
         CheckWheelsColliders();
+        if (!isOnTrack)
+        {
+            AddReward(-0.1f);
+        }
     }
+
+
 
     /* DRIVEAGENT OVERRIDES */
     public override void OnCheckpointReached()
     {
         // Add reward for reaching a checkpoint
+        AddReward(0.2f);
     }
 
     public override void LapCompleted()
     {
-        // Add reward for completing a lap
+        // Add reward for completing a lap and end episode for all agents
+        AddReward(1f);
+        GetComponent<RaceTrainManager>().EndEpisodeForAllAgents();
     }
 
     /* AGENT OVERRIDES */
-
     public override void CollectObservations(VectorSensor sensor)
     {
         // Should contain the following observations:
@@ -59,12 +77,11 @@ public class DriveAgentM2 : DriveAgent
         car.transform.rotation = startPoint.transform.rotation;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        this.CheckpointTriggerer.points = 0;
+        this.CheckpointTriggerer.points = 0; // FIXME this is not working
         Debug.ClearDeveloperConsole();
     }
 
     /* SELF-DEFINED METHODS */
-
     private void CheckWheelsColliders()
     {
         wheelsOnTrack = 0;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class RaceTrainManager : MonoBehaviour
@@ -62,6 +63,15 @@ public class RaceTrainManager : MonoBehaviour
                 }
             }
             car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
+        }
+    }
+
+    public void EndEpisodeForAllAgents()
+    {
+        foreach (GameObject car in cars)
+        {
+            //FIXME: the car calling this method is being reset twice, is it ok?
+            car.GetComponent<DriveAgentM2>().EndEpisode();
         }
     }
 }
