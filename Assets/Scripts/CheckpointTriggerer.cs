@@ -18,7 +18,7 @@ public class CheckpointTriggerer : MonoBehaviour
 
     public int finishLineCheckpoint;
 
-    public int episodeStep = 10;
+    public int episodeStep = 50;
 
     void Start()
     {
@@ -31,7 +31,7 @@ public class CheckpointTriggerer : MonoBehaviour
     {
         // there is one finish line every 5 checkpoints and move finish line forwards when they complete the race 'episodeStep' times
 
-        int finishLineCheckpointIndex = ((int)math.floor(completedEpisodes / episodeStep)) * 5;
+        int finishLineCheckpointIndex = ((int)math.floor(completedEpisodes / episodeStep)) * 1;
 
         if (finishLineCheckpointIndex > checkpoints.Length)
         {
@@ -64,5 +64,17 @@ public class CheckpointTriggerer : MonoBehaviour
                 driveAgent.OnCheckpointReached();
             }
         }
+    }
+
+    public GameObject GetNextCheckpointPlusOffset(int offset)
+    {
+        int nextCheckpointIndex = points + offset;
+
+        if (nextCheckpointIndex >= checkpoints.Length)
+        {
+            nextCheckpointIndex = nextCheckpointIndex - checkpoints.Length;
+        }
+
+        return checkpoints[nextCheckpointIndex];
     }
 }

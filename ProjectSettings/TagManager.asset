@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Ground
   - Track
+  - Bounds
   layers:
   - Default
   - TransparentFX

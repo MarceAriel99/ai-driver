@@ -5878,7 +5878,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7527624535538174063}
   m_LocalRotation: {x: -0, y: 0.999968, z: -0, w: 0.008002449}
-  m_LocalPosition: {x: 91.50026, y: 0.10399997, z: -135.04155}
+  m_LocalPosition: {x: 93.59, y: 0.10399997, z: -135.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6092,6 +6092,8 @@ MonoBehaviour:
   driveAgent: {fileID: 0}
   checkpoints: []
   distanceToNextCheckpoint: 0
+  finishLineCheckpoint: 0
+  episodeStep: 10
 --- !u!114 &7630376149284509360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6105,7 +6107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 4
+    VectorObservationSize: 7
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -6146,6 +6148,8 @@ MonoBehaviour:
   - {fileID: 7672895752483741119}
   - {fileID: 7672617500560080763}
   - {fileID: 7672889761809998233}
+  wheelsOnTrack: 0
+  raceTrainManager: {fileID: 0}
 --- !u!114 &7630376149284509366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6174,8 +6178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensor
   m_DetectableTags: []
-  m_RaysPerDirection: 6
-  m_MaxRayDegrees: 70
+  m_RaysPerDirection: 35
+  m_MaxRayDegrees: 180
   m_SphereCastRadius: 0.5
   m_RayLength: 200
   m_RayLayerMask:

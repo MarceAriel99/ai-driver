@@ -17,6 +17,7 @@ public class RaceTrainManager : MonoBehaviour
         cars = GameObject.FindGameObjectsWithTag("Car");
         carsPositions = new Dictionary<GameObject, int>();
         carsCurrentCheckpoints = new Dictionary<GameObject, int>();
+        SetRaceTrainManagerForAllCars();
     }
 
     void FixedUpdate()
@@ -62,16 +63,29 @@ public class RaceTrainManager : MonoBehaviour
                     }
                 }
             }
+            // This component should be cached
             car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
         }
     }
 
-    public void EndEpisodeForAllAgents()
+    public void EndEpisodeForAllAgents(GameObject carCallingThisMethod)
+    {
+        foreach (GameObject car in cars)
+        {   
+            car.GetComponent<DriveAgentM2>().EndEpisode();
+            /*
+            if (car != carCallingThisMethod){
+                
+            }
+            */
+        }
+    }
+
+    void SetRaceTrainManagerForAllCars()
     {
         foreach (GameObject car in cars)
         {
-            //FIXME: the car calling this method is being reset twice, is it ok?
-            car.GetComponent<DriveAgentM2>().EndEpisode();
+            car.GetComponent<DriveAgentM2>().SetTrainManager(this);
         }
     }
 }
