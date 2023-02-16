@@ -16,7 +16,7 @@ public class CheckpointTriggerer : MonoBehaviour
 
     public float distanceToNextCheckpoint;
 
-    public int finishLineCheckpoint;
+    public int finishLineCheckpointIndex;
 
     public int episodeStep = 50;
 
@@ -24,9 +24,11 @@ public class CheckpointTriggerer : MonoBehaviour
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         driveAgent = GetComponent<DriveAgent>(); // FIXME: esto esta bien o deberia ser M2?
-        finishLineCheckpoint = GetFinishLineCheckpointIndex(driveAgent.CompletedEpisodes);
+        //finishLineCheckpoint = GetFinishLineCheckpointIndex(driveAgent.CompletedEpisodes);
+        //finishLineCheckpoint = 0;
     }
 
+    /*
     private int GetFinishLineCheckpointIndex(int completedEpisodes)
     {
         // there is one finish line every 5 checkpoints and move finish line forwards when they complete the race 'episodeStep' times
@@ -40,6 +42,7 @@ public class CheckpointTriggerer : MonoBehaviour
 
         return finishLineCheckpointIndex;
     }
+    */
 
     void FixedUpdate()
     {
@@ -53,12 +56,12 @@ public class CheckpointTriggerer : MonoBehaviour
         if (other.gameObject.tag == "Checkpoint" && other.gameObject == checkpoints[points])
         {
             // add reward to the agent
-            if (points == finishLineCheckpoint)
+            if (points == finishLineCheckpointIndex)
             {
                 points = 0;
                 // FIXME hay codigo repetido pero hasta que no funcionen los puntos queda asi
                 driveAgent.LapCompleted();
-                finishLineCheckpoint = GetFinishLineCheckpointIndex(driveAgent.CompletedEpisodes);
+                //finishLineCheckpoint = GetFinishLineCheckpointIndex(driveAgent.CompletedEpisodes);
             } else {
                 points++;
                 driveAgent.OnCheckpointReached();

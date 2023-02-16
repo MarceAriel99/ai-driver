@@ -10,6 +10,8 @@ public class RaceTrainManager : MonoBehaviour
 
     private Dictionary<GameObject, int> carsCurrentCheckpoints;
 
+    public int finishLineCheckpointIndex;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +74,8 @@ public class RaceTrainManager : MonoBehaviour
     {
         foreach (GameObject car in cars)
         {   
+            // Print acumulated reward for every car
+            Debug.Log(car.name + "was resetted because" + carCallingThisMethod.name  + "won. It has acumulated a reward of " + car.GetComponent<DriveAgentM2>().GetCumulativeReward());
             car.GetComponent<DriveAgentM2>().EndEpisode();
             /*
             if (car != carCallingThisMethod){
@@ -86,6 +90,7 @@ public class RaceTrainManager : MonoBehaviour
         foreach (GameObject car in cars)
         {
             car.GetComponent<DriveAgentM2>().SetTrainManager(this);
+            car.GetComponent<CheckpointTriggerer>().finishLineCheckpointIndex = finishLineCheckpointIndex;
         }
     }
 }

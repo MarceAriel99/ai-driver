@@ -31,13 +31,19 @@ public class DriveAgentM2 : DriveAgent
         // Add rewards for every step
         
         // rewards for going forward
-        if (carController.CurrentAcceleration > 0)
+        if (transform.InverseTransformDirection(rb.velocity).z > 0)
         {
             AddReward(0.005f);
         }
 
+        // penalty for braking
+        if (carController.CurrentAcceleration < 0)
+        {
+            //AddReward(-0.0005f);
+        }
+
         // rewards for position on the race
-        AddReward(0.01f * currentPositionNormalized);
+        AddReward(0.0025f * currentPositionNormalized);
 
         // rewards for being on the track
         CheckWheelsColliders();
@@ -45,38 +51,42 @@ public class DriveAgentM2 : DriveAgent
         if (!isOnTrack)
         {
             offTrackTimer += Time.fixedDeltaTime;
-            AddReward(-0.15f);
+            AddReward(-2f);
         }
         else
         {
             offTrackTimer = 0;
         }
 
-        if (offTrackTimer > 1)
+        if (offTrackTimer > 2)
         {
-            AddReward(-50f);
+            SetReward(-50f);
+            Debug.Log("Car " + transform.gameObject.name + " went off track for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
             EndEpisode();
         }
 
         // reward for direction to next checkpoint
-        AddReward(0.02f * (1 - Math.Abs(normalizedDirectionToNextCheckpoint)));
+        //Debug.Log("Adding reward for direction to next checkpoint: " + (0.001f * (1 - Math.Abs(normalizedDirectionToNextCheckpoint))) + "To car " + transform.gameObject.name);
+        AddReward(0.01f * (1 - Math.Abs(normalizedDirectionToNextCheckpoint)));
 
         // penalty for time passing
-        AddReward(-0.0005f);
+        AddReward(-0.025f);
     }
 
     /* DRIVEAGENT OVERRIDES */
     public override void OnCheckpointReached()
     {
         // Add reward for reaching a checkpoint
-        AddReward(1f);
+        AddReward(8f);
     }
 
     public override void LapCompleted()
     {
         // Add reward for completing a lap and end episode for all agents
-        AddReward(10f);
-        raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
+        AddReward(20f);
+        Debug.Log("Car" + transform.gameObject.name + " completed a lap. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
+        EndEpisode();
+        //raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
 
     /* AGENT OVERRIDES */
@@ -141,7 +151,7 @@ public class DriveAgentM2 : DriveAgent
             }
         }
 
-        if (wheelsOnTrack >= 2)
+        if (wheelsOnTrack == 4)
         {
             isOnTrack = true;
         }

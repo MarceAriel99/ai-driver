@@ -6092,7 +6092,7 @@ MonoBehaviour:
   driveAgent: {fileID: 0}
   checkpoints: []
   distanceToNextCheckpoint: 0
-  finishLineCheckpoint: 0
+  finishLineCheckpointIndex: 0
   episodeStep: 10
 --- !u!114 &7630376149284509360
 MonoBehaviour:
@@ -6143,6 +6143,7 @@ MonoBehaviour:
   startPoint: {fileID: 0}
   currentPositionNormalized: 0
   isOnTrack: 1
+  offTrackTimer: 0
   wheelColliders:
   - {fileID: 7672806471384834127}
   - {fileID: 7672895752483741119}
@@ -6150,6 +6151,12 @@ MonoBehaviour:
   - {fileID: 7672889761809998233}
   wheelsOnTrack: 0
   raceTrainManager: {fileID: 0}
+  normalizedVelocity: 0
+  normalizedAngularVelocity: 0
+  normalizedPosition: 0
+  normalizedDirectionToNextCheckpoint: 0
+  normalizedDistanceToNextCheckpoint: 0
+  normalizedDirectionToNextNextCheckpoint: 0
 --- !u!114 &7630376149284509366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6178,8 +6185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensor
   m_DetectableTags: []
-  m_RaysPerDirection: 35
-  m_MaxRayDegrees: 180
+  m_RaysPerDirection: 12
+  m_MaxRayDegrees: 120
   m_SphereCastRadius: 0.5
   m_RayLength: 200
   m_RayLayerMask:
