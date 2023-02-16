@@ -11,6 +11,9 @@ public class RaceTrainManager : MonoBehaviour
     private Dictionary<GameObject, int> carsCurrentCheckpoints;
 
     public int finishLineCheckpointIndex;
+    public int numberRepeatFinishLine = 15;
+    public int checkpointsBetweenFinishLines = 2;
+    public int counterRepeatFinishLine = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +23,7 @@ public class RaceTrainManager : MonoBehaviour
         carsPositions = new Dictionary<GameObject, int>();
         carsCurrentCheckpoints = new Dictionary<GameObject, int>();
         SetRaceTrainManagerForAllCars();
+        SetFinishLineCheckpointIndexForAllCars();
     }
 
     void FixedUpdate()
@@ -66,7 +70,26 @@ public class RaceTrainManager : MonoBehaviour
                 }
             }
             // This component should be cached
-            car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
+            // If the car has this component, set it's position
+            if (car.GetComponent<DriveAgentM2>() != null){
+                car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
+            }  
+        }
+    }
+
+    public void LapCompleted(){
+        
+        counterRepeatFinishLine++;
+
+        if (counterRepeatFinishLine == numberRepeatFinishLine)
+        {
+            counterRepeatFinishLine = 0;
+            finishLineCheckpointIndex = finishLineCheckpointIndex + checkpointsBetweenFinishLines;
+            if (finishLineCheckpointIndex > cars[0].GetComponent<CheckpointTriggerer>().checkpoints.Length)
+            {
+                finishLineCheckpointIndex = cars[0].GetComponent<CheckpointTriggerer>().checkpoints.Length;
+            }
+            SetFinishLineCheckpointIndexForAllCars();
         }
     }
 
@@ -77,11 +100,6 @@ public class RaceTrainManager : MonoBehaviour
             // Print acumulated reward for every car
             Debug.Log(car.name + "was resetted because" + carCallingThisMethod.name  + "won. It has acumulated a reward of " + car.GetComponent<DriveAgentM2>().GetCumulativeReward());
             car.GetComponent<DriveAgentM2>().EndEpisode();
-            /*
-            if (car != carCallingThisMethod){
-                
-            }
-            */
         }
     }
 
@@ -89,7 +107,18 @@ public class RaceTrainManager : MonoBehaviour
     {
         foreach (GameObject car in cars)
         {
-            car.GetComponent<DriveAgentM2>().SetTrainManager(this);
+            if (car.GetComponent<DriveAgentM2>() != null) 
+            {
+                car.GetComponent<DriveAgentM2>().SetTrainManager(this);
+            }
+        }
+    }
+
+    void SetFinishLineCheckpointIndexForAllCars()
+    {
+        Debug.Log("Finish line checkpoint index is " + finishLineCheckpointIndex);
+        foreach (GameObject car in cars)
+        {
             car.GetComponent<CheckpointTriggerer>().finishLineCheckpointIndex = finishLineCheckpointIndex;
         }
     }

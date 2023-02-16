@@ -6024,7 +6024,7 @@ MonoBehaviour:
     MaxSteerAngleMultiplier: 1
     MaxSpeedForMinAngleMultiplier: 250
     SteerAngleChangeSpeed: 60
-    MinSpeedForSteerHelp: 20
+    MinSpeedForSteerHelp: 500
     HelpSteerPower: 0.2
     OppositeAngularVelocityHelpPower: 0.05
     PositiveAngularVelocityHelpPower: 0
@@ -6107,7 +6107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 7
+    VectorObservationSize: 12
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -6144,6 +6144,7 @@ MonoBehaviour:
   currentPositionNormalized: 0
   isOnTrack: 1
   offTrackTimer: 0
+  notMovingTimer: 0
   wheelColliders:
   - {fileID: 7672806471384834127}
   - {fileID: 7672895752483741119}
@@ -6154,9 +6155,16 @@ MonoBehaviour:
   normalizedVelocity: 0
   normalizedAngularVelocity: 0
   normalizedPosition: 0
-  normalizedDirectionToNextCheckpoint: 0
   normalizedDistanceToNextCheckpoint: 0
-  normalizedDirectionToNextNextCheckpoint: 0
+  normalizedDirectionToCheckpoints:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &7630376149284509366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6191,7 +6199,7 @@ MonoBehaviour:
   m_RayLength: 200
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 128
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}

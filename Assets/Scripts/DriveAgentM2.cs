@@ -12,6 +12,9 @@ public class DriveAgentM2 : DriveAgent
     public Boolean isOnTrack = true;
     public float offTrackTimer = 0;
 
+    public float notMovingTimer = 0;
+    public float noCheckpointTimer = 0;
+
     public WheelCollider[] wheelColliders;
     
     public int wheelsOnTrack = 0;
@@ -21,70 +24,117 @@ public class DriveAgentM2 : DriveAgent
     public float normalizedVelocity;
     public float normalizedAngularVelocity;
     public float normalizedPosition;
-    public float normalizedDirectionToNextCheckpoint;
     public float normalizedDistanceToNextCheckpoint;
-    public float normalizedDirectionToNextNextCheckpoint;
+
+    public float[] normalizedDirectionToCheckpoints = new float[8];
 
     /* FIXED UPDATE */
     private void FixedUpdate()
     {
-        // Add rewards for every step
+        /* POSITIVE REWARDS */
         
         // rewards for going forward
-        if (transform.InverseTransformDirection(rb.velocity).z > 0)
+        //Debug.Log(transform.InverseTransformDirection(rb.velocity).z);
+        if (transform.InverseTransformDirection(rb.velocity).z > 2)
         {
-            AddReward(0.005f);
+            AddReward(0.001f);
         }
 
-        // penalty for braking
-        if (carController.CurrentAcceleration < 0)
+        if (rb.velocity.magnitude > 0.4f)
         {
-            //AddReward(-0.0005f);
+            notMovingTimer = 0;
         }
+        else
+        {
+            notMovingTimer += Time.fixedDeltaTime;
+        }
+
+        noCheckpointTimer += Time.fixedDeltaTime;
 
         // rewards for position on the race
-        AddReward(0.0025f * currentPositionNormalized);
+        //AddReward(0.0005f * currentPositionNormalized);
+
+        // reward for direction to next checkpoint
+        //Debug.Log("Adding reward for direction to next checkpoint: " + (0.001f * (1 - Math.Abs(normalizedDirectionToNextCheckpoint))) + "To car " + transform.gameObject.name);
+        AddReward(0.0002f * (1 - Math.Abs(normalizedDirectionToCheckpoints[0])));
 
         // rewards for being on the track
         CheckWheelsColliders();
 
-        if (!isOnTrack)
+        if (isOnTrack)
         {
-            offTrackTimer += Time.fixedDeltaTime;
-            AddReward(-2f);
+            offTrackTimer = 0;  
+            AddReward(0.002f);
         }
         else
         {
-            offTrackTimer = 0;
+            offTrackTimer += Time.fixedDeltaTime;
         }
+
+        /* NEGATIVE REWARDS */
+
+        // penalty for braking
+        if (carController.CurrentAcceleration < 0)
+        {
+            //AddReward(-0.00025f);
+        }
+
+        // penalty for time passing
+        //AddReward(-0.025f);
 
         if (offTrackTimer > 2)
         {
-            SetReward(-50f);
+            AddReward(-10f);
             Debug.Log("Car " + transform.gameObject.name + " went off track for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
             EndEpisode();
         }
+        if (notMovingTimer > 4)
+        {
+            AddReward(-10f);
+            Debug.Log("Car " + transform.gameObject.name + " is not moving for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
+            EndEpisode();
+        }
+        if (noCheckpointTimer > 4)
+        {
+            AddReward(-10f);
+            Debug.Log("Car " + transform.gameObject.name + " is not advancing checkpoints for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
+            EndEpisode();
+        }
+    }
 
-        // reward for direction to next checkpoint
-        //Debug.Log("Adding reward for direction to next checkpoint: " + (0.001f * (1 - Math.Abs(normalizedDirectionToNextCheckpoint))) + "To car " + transform.gameObject.name);
-        AddReward(0.01f * (1 - Math.Abs(normalizedDirectionToNextCheckpoint)));
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            // Get collision speed
+            float collisionSpeed = rb.velocity.magnitude;
+            // Add reward for collision speed
+            AddReward(-0.1f * collisionSpeed);
+        }
+    }
 
-        // penalty for time passing
-        AddReward(-0.025f);
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            //AddReward(-0.005f);
+        }
     }
 
     /* DRIVEAGENT OVERRIDES */
     public override void OnCheckpointReached()
     {
         // Add reward for reaching a checkpoint
-        AddReward(8f);
+        noCheckpointTimer = 0;
+        AddReward(2f);
     }
 
     public override void LapCompleted()
     {
         // Add reward for completing a lap and end episode for all agents
-        AddReward(20f);
+        AddReward(5f);
         Debug.Log("Car" + transform.gameObject.name + " completed a lap. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
+        raceTrainManager.LapCompleted();
         EndEpisode();
         //raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
@@ -100,27 +150,24 @@ public class DriveAgentM2 : DriveAgent
         normalizedAngularVelocity = Math.Clamp(rb.angularVelocity.y/4, -1, 1);
         // - Current position on race
         normalizedPosition = currentPositionNormalized;
-        // - Is the car on the track
-        // - Direction to next checkpoint
-        Vector3 carForward = new Vector3(car.transform.forward.x, 0, car.transform.forward.z);
-        Vector3 carToNextCheckpoint = new Vector3(CheckpointTriggerer.GetNextCheckpointPlusOffset(0).transform.position.x - transform.position.x, 0, CheckpointTriggerer.GetNextCheckpointPlusOffset(0).transform.position.z - transform.position.z);
-        normalizedDirectionToNextCheckpoint = Vector3.SignedAngle(carForward, carToNextCheckpoint, Vector3.up)/180;
         // - Distance to next checkpoint
         normalizedDistanceToNextCheckpoint = Math.Clamp(CheckpointTriggerer.distanceToNextCheckpoint/50, 0, 1);
-        // - Direction to second next checkpoint
-        Vector3 carToNextNextCheckpoint = new Vector3(CheckpointTriggerer.GetNextCheckpointPlusOffset(1).transform.position.x - transform.position.x, 0, CheckpointTriggerer.GetNextCheckpointPlusOffset(1).transform.position.z - transform.position.z);
-        normalizedDirectionToNextNextCheckpoint = Vector3.SignedAngle(carForward, carToNextNextCheckpoint, Vector3.up)/180;
-        // Normalise all observations
+        // - Direction to next checkpoints
+        Vector3 carForward = new Vector3(car.transform.forward.x, 0, car.transform.forward.z);
+
+        for (int i = 0; i < 8; i++)
+        {
+            Vector3 carToNextCheckpoint = new Vector3(CheckpointTriggerer.GetNextCheckpointPlusOffset(i).transform.position.x - transform.position.x, 0, CheckpointTriggerer.GetNextCheckpointPlusOffset(i).transform.position.z - transform.position.z);
+            normalizedDirectionToCheckpoints[i] = Vector3.SignedAngle(carForward, carToNextCheckpoint, Vector3.up)/180;
+        }
 
         // Add observations to sensor
-
         sensor.AddObservation(normalizedVelocity);
         sensor.AddObservation(normalizedAngularVelocity);
-        sensor.AddObservation(normalizedPosition);
+        //sensor.AddObservation(normalizedPosition);
         sensor.AddObservation(isOnTrack);
-        sensor.AddObservation(normalizedDirectionToNextCheckpoint);
         sensor.AddObservation(normalizedDistanceToNextCheckpoint);
-        sensor.AddObservation(normalizedDirectionToNextNextCheckpoint);
+        sensor.AddObservation(normalizedDirectionToCheckpoints);
     }
 
     public override void OnEpisodeBegin()
@@ -130,6 +177,12 @@ public class DriveAgentM2 : DriveAgent
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         this.CheckpointTriggerer.points = 0;
+
+        // Reset timers
+        notMovingTimer = 0;
+        offTrackTimer = 0;
+        noCheckpointTimer = 0;
+
         Debug.ClearDeveloperConsole();
     }
 

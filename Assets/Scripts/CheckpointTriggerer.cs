@@ -24,8 +24,6 @@ public class CheckpointTriggerer : MonoBehaviour
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         driveAgent = GetComponent<DriveAgent>(); // FIXME: esto esta bien o deberia ser M2?
-        //finishLineCheckpoint = GetFinishLineCheckpointIndex(driveAgent.CompletedEpisodes);
-        //finishLineCheckpoint = 0;
     }
 
     /*
@@ -45,7 +43,11 @@ public class CheckpointTriggerer : MonoBehaviour
     */
 
     void FixedUpdate()
-    {
+    {   
+        if (points == checkpoints.Length)
+        {
+            points = 0;
+        }
         // distance to next checkpoint
         distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[points].transform.position);
     }
@@ -61,7 +63,6 @@ public class CheckpointTriggerer : MonoBehaviour
                 points = 0;
                 // FIXME hay codigo repetido pero hasta que no funcionen los puntos queda asi
                 driveAgent.LapCompleted();
-                //finishLineCheckpoint = GetFinishLineCheckpointIndex(driveAgent.CompletedEpisodes);
             } else {
                 points++;
                 driveAgent.OnCheckpointReached();
