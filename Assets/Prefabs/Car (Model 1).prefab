@@ -5857,14 +5857,13 @@ GameObject:
   - component: {fileID: 7631010196088761983}
   - component: {fileID: 7630376149284509371}
   - component: {fileID: 7630931723570206935}
-  - component: {fileID: 7630945166430785003}
   - component: {fileID: 7589108531256273727}
   - component: {fileID: 7630376149284509364}
-  - component: {fileID: 7630376149284509365}
   - component: {fileID: 7630376149284509360}
-  - component: {fileID: 7630376149284509367}
   - component: {fileID: 7630376149284509366}
+  - component: {fileID: 2652304574523624165}
   - component: {fileID: 7630376149284509361}
+  - component: {fileID: 8194189530135532911}
   m_Layer: 3
   m_Name: Car (Model 1)
   m_TagString: Car
@@ -6070,18 +6069,6 @@ MonoBehaviour:
   SlipSource: {fileID: 7588594659634199471}
   MinSlipSound: 0.15
   MaxSlipForSound: 1
---- !u!114 &7630945166430785003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7527624535538174063}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeb67c03a9a7bb745b02d885278296b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &7589108531256273727
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6103,22 +6090,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: 0
-  driveAgent: {fileID: 7630376149284509367}
---- !u!114 &7630376149284509365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7527624535538174063}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1108ea4ebc9be49a924519b7c49e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  show_raycast_line: 1
-  debug_raycast_console: 0
-  length: 150
+  driveAgent: {fileID: 0}
+  checkpoints: []
 --- !u!114 &7630376149284509360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6149,25 +6122,6 @@ MonoBehaviour:
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
---- !u!114 &7630376149284509367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7527624535538174063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1820d280b18836d408f1ecedc720a8ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 12000
-  CheckpointTriggerer: {fileID: 0}
-  startPoint: {fileID: 0}
-  has_touched_wall: 0
 --- !u!114 &7630376149284509366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6182,6 +6136,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 1
   TakeActionsBetweenDecisions: 1
+--- !u!114 &2652304574523624165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527624535538174063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1820d280b18836d408f1ecedc720a8ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  CheckpointTriggerer: {fileID: 0}
+  startPoint: {fileID: 0}
 --- !u!114 &7630376149284509361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6208,6 +6180,22 @@ MonoBehaviour:
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
   m_EndVerticalOffset: 0
+--- !u!114 &8194189530135532911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527624535538174063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b6042bc9a5d4aa58d931eae49442e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
 --- !u!1 &7527627200428749615
 GameObject:
   m_ObjectHideFlags: 0

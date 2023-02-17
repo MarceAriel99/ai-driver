@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 
@@ -10,35 +12,73 @@ public class CheckpointTriggerer : MonoBehaviour
 
     public DriveAgent driveAgent;
 
-    private void OnTriggerEnter(Collider other)
+    public GameObject[] checkpoints;
+
+    public float distanceToNextCheckpoint;
+
+    public int finishLineCheckpointIndex;
+
+    public int episodeStep = 50;
+
+    void Start()
     {
-        // get list of all checkpoints
-        GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        //Debug.Log(other.gameObject.name);
-        
+        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        driveAgent = GetComponent<DriveAgent>(); // FIXME: esto esta bien o deberia ser M2?
+    }
+
+    /*
+    private int GetFinishLineCheckpointIndex(int completedEpisodes)
+    {
+        // there is one finish line every 5 checkpoints and move finish line forwards when they complete the race 'episodeStep' times
+
+        int finishLineCheckpointIndex = ((int)math.floor(completedEpisodes / episodeStep)) * 1;
+
+        if (finishLineCheckpointIndex > checkpoints.Length)
+        {
+            finishLineCheckpointIndex = checkpoints.Length;
+        }
+
+        return finishLineCheckpointIndex;
+    }
+    */
+
+    void FixedUpdate()
+    {   
+        if (points == checkpoints.Length)
+        {
+            points = 0;
+        }
+        // distance to next checkpoint
+        distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[points].transform.position);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {      
         // sums points only if the object that enters the trigger is a checkpoint and it accords to the points counter
         if (other.gameObject.tag == "Checkpoint" && other.gameObject == checkpoints[points])
         {
             // add reward to the agent
-            points++;
-            if (points == checkpoints.Length)
+            if (points == finishLineCheckpointIndex)
             {
                 points = 0;
+                // FIXME hay codigo repetido pero hasta que no funcionen los puntos queda asi
                 driveAgent.LapCompleted();
+            } else {
+                points++;
+                driveAgent.OnCheckpointReached();
             }
-            driveAgent.onCheckpointReached();
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject GetNextCheckpointPlusOffset(int offset)
     {
-        
-    }
+        int nextCheckpointIndex = points + offset;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (nextCheckpointIndex >= checkpoints.Length)
+        {
+            nextCheckpointIndex = nextCheckpointIndex - checkpoints.Length;
+        }
+
+        return checkpoints[nextCheckpointIndex];
     }
 }

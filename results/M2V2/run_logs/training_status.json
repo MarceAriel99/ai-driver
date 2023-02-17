@@ -1,0 +1,65 @@
+{
+    "Drive": {
+        "checkpoints": [
+            {
+                "steps": 10499995,
+                "file_path": "results\\M2V2\\Drive\\Drive-10499995.onnx",
+                "reward": null,
+                "creation_time": 1676584767.560452,
+                "auxillary_file_paths": [
+                    "results\\M2V2\\Drive\\Drive-10499995.pt"
+                ]
+            },
+            {
+                "steps": 10910311,
+                "file_path": "results\\M2V2\\Drive\\Drive-10910311.onnx",
+                "reward": null,
+                "creation_time": 1676585237.4402,
+                "auxillary_file_paths": [
+                    "results\\M2V2\\Drive\\Drive-10910311.pt"
+                ]
+            },
+            {
+                "steps": 10999994,
+                "file_path": "results\\M2V2\\Drive\\Drive-10999994.onnx",
+                "reward": 196.87064047157764,
+                "creation_time": 1676585428.5852811,
+                "auxillary_file_paths": [
+                    "results\\M2V2\\Drive\\Drive-10999994.pt"
+                ]
+            },
+            {
+                "steps": 11329696,
+                "file_path": "results\\M2V2\\Drive\\Drive-11329696.onnx",
+                "reward": 226.86720314621925,
+                "creation_time": 1676585832.9746504,
+                "auxillary_file_paths": [
+                    "results\\M2V2\\Drive\\Drive-11329696.pt"
+                ]
+            },
+            {
+                "steps": 11415483,
+                "file_path": "results\\M2V2\\Drive\\Drive-11415483.onnx",
+                "reward": null,
+                "creation_time": 1676586031.2864554,
+                "auxillary_file_paths": [
+                    "results\\M2V2\\Drive\\Drive-11415483.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 11415483,
+            "file_path": "results\\M2V2\\Drive.onnx",
+            "reward": null,
+            "creation_time": 1676586031.2864554,
+            "auxillary_file_paths": [
+                "results\\M2V2\\Drive\\Drive-11415483.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "Drive": {
+        "checkpoints": [
+            {
+                "steps": 1858173,
+                "file_path": "results\\M2\\Drive\\Drive-1858173.onnx",
+                "reward": 29.756749127060175,
+                "creation_time": 1676555780.827684,
+                "auxillary_file_paths": [
+                    "results\\M2\\Drive\\Drive-1858173.pt"
+                ]
+            },
+            {
+                "steps": 1999937,
+                "file_path": "results\\M2\\Drive\\Drive-1999937.onnx",
+                "reward": 100.29098291369155,
+                "creation_time": 1676556008.258299,
+                "auxillary_file_paths": [
+                    "results\\M2\\Drive\\Drive-1999937.pt"
+                ]
+            },
+            {
+                "steps": 2499984,
+                "file_path": "results\\M2\\Drive\\Drive-2499984.onnx",
+                "reward": 63.075916945934296,
+                "creation_time": 1676556756.043561,
+                "auxillary_file_paths": [
+                    "results\\M2\\Drive\\Drive-2499984.pt"
+                ]
+            },
+            {
+                "steps": 2999943,
+                "file_path": "results\\M2\\Drive\\Drive-2999943.onnx",
+                "reward": 44.00260135932611,
+                "creation_time": 1676557343.9598584,
+                "auxillary_file_paths": [
+                    "results\\M2\\Drive\\Drive-2999943.pt"
+                ]
+            },
+            {
+                "steps": 3370033,
+                "file_path": "results\\M2\\Drive\\Drive-3370033.onnx",
+                "reward": null,
+                "creation_time": 1676557825.2990122,
+                "auxillary_file_paths": [
+                    "results\\M2\\Drive\\Drive-3370033.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3370033,
+            "file_path": "results\\M2\\Drive.onnx",
+            "reward": null,
+            "creation_time": 1676557825.2990122,
+            "auxillary_file_paths": [
+                "results\\M2\\Drive\\Drive-3370033.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

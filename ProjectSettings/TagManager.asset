@@ -7,6 +7,9 @@ TagManager:
   - Car
   - Checkpoint
   - Wall
+  - Ground
+  - Track
+  - Bounds
   layers:
   - Default
   - TransparentFX
@@ -14,9 +17,9 @@ TagManager:
   - Car
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Ground
+  - Wall
+  - Track
   - 
   - 
   - 
