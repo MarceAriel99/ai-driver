@@ -71,8 +71,8 @@ public class RaceTrainManager : MonoBehaviour
             }
             // This component should be cached
             // If the car has this component, set it's position
-            if (car.GetComponent<DriveAgentM2>() != null){
-                car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
+            if (car.GetComponent<DriveAgentM3>() != null){
+                car.GetComponent<DriveAgentM3>().SetPosition(carCurrentPosition, cars.Length);
             }  
         }
     }
