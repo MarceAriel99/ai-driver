@@ -29,6 +29,8 @@ public class DriveAgentM3 : DriveAgent
 
     public float[] normalizedDistancesToCheckpoints = new float[12];
 
+    public GameObject[] nextCheckpoints = new GameObject[12];
+
     /* FIXED UPDATE */
     private void FixedUpdate()
     {
@@ -65,34 +67,35 @@ public class DriveAgentM3 : DriveAgent
         if (isOnTrack)
         {
             offTrackTimer = 0;  
-            AddReward(0.002f);
+            AddReward(0.005f);
         }
         else
         {
             offTrackTimer += Time.fixedDeltaTime;
+            AddReward(-0.05f);
         }
 
         /* NEGATIVE REWARDS */
 
         //penalty for time passing
         //AddReward(-0.025f);
-
+        
         // If car is off track for too long, end episode
-        if (offTrackTimer > 2)
-        {
-            AddReward(-10f);
-            Debug.Log("Car " + transform.gameObject.name + " went off track for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
-            EndEpisode();
-        }
+        // if (offTrackTimer > 2)
+        // {
+        //     AddReward(-30f);
+        //     Debug.Log("Car " + transform.gameObject.name + " went off track for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
+        //     EndEpisode();
+        // }
         // If car is not moving for too long, end episode
         if (notMovingTimer > 4)
         {
-            AddReward(-10f);
+            AddReward(-30f);
             Debug.Log("Car " + transform.gameObject.name + " is not moving for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
             EndEpisode();
         }
         //If car is not advancing checkpoints and it is not at the start of the race, end episode
-        if (noCheckpointTimer > 4 && CheckpointTriggerer.points > 3)
+        if (noCheckpointTimer > 6/* && CheckpointTriggerer.points > 1*/)
         {
             AddReward(-10f);
             Debug.Log("Car " + transform.gameObject.name + " is not advancing checkpoints for too long. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
@@ -116,7 +119,11 @@ public class DriveAgentM3 : DriveAgent
     {
         // Add reward for reaching a checkpoint
         noCheckpointTimer = 0;
-        AddReward(2f);
+        AddReward(3.5f);
+        for (int i = 0; i < 12; i++)
+        {
+            nextCheckpoints[i] = CheckpointTriggerer.GetNextCheckpointPlusOffset(i);
+        }
     }
 
     public override void LapCompleted()
@@ -125,8 +132,14 @@ public class DriveAgentM3 : DriveAgent
         AddReward(5f);
         Debug.Log("Car" + transform.gameObject.name + " completed a lap. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
         raceTrainManager.LapCompleted();
-        EndEpisode();
+        //EndEpisode();
         //raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
+    }
+
+    public override void RaceCompleted()
+    {
+        AddReward(50f);
+        raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
 
     /* AGENT OVERRIDES */
@@ -167,6 +180,7 @@ public class DriveAgentM3 : DriveAgent
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         this.CheckpointTriggerer.points = 0;
+        this.CheckpointTriggerer.currentLap = 0;
 
         // Reset timers
         notMovingTimer = 0;

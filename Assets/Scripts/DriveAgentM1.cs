@@ -32,6 +32,11 @@ public class DriveAgentM1 : DriveAgent
         EndEpisode();
     }
 
+    public override void RaceCompleted()
+    {
+        throw new System.NotImplementedException();
+    }
+
     /* AGENT OVERRIDES */
 
     public override void CollectObservations(VectorSensor sensor)

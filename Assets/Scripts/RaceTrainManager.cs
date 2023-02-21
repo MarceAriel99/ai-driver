@@ -85,11 +85,11 @@ public class RaceTrainManager : MonoBehaviour
         {
             counterRepeatFinishLine = 0;
             finishLineCheckpointIndex = finishLineCheckpointIndex + checkpointsBetweenFinishLines;
-            if (finishLineCheckpointIndex > cars[0].GetComponent<CheckpointTriggerer>().checkpoints.Length)
+            if (finishLineCheckpointIndex >= cars[0].GetComponent<CheckpointTriggerer>().checkpoints.Length)
             {
-                finishLineCheckpointIndex = cars[0].GetComponent<CheckpointTriggerer>().checkpoints.Length;
+                finishLineCheckpointIndex = cars[0].GetComponent<CheckpointTriggerer>().checkpoints.Length - 1;
             }
-            SetFinishLineCheckpointIndexForAllCars();
+            //SetFinishLineCheckpointIndexForAllCars();
         }
     }
 
@@ -98,8 +98,8 @@ public class RaceTrainManager : MonoBehaviour
         foreach (GameObject car in cars)
         {   
             // Print acumulated reward for every car
-            Debug.Log(car.name + "was resetted because" + carCallingThisMethod.name  + "won. It has acumulated a reward of " + car.GetComponent<DriveAgentM2>().GetCumulativeReward());
-            car.GetComponent<DriveAgentM2>().EndEpisode();
+            Debug.Log(car.name + "was resetted because" + carCallingThisMethod.name  + "won. It has acumulated a reward of " + car.GetComponent<DriveAgentM3>().GetCumulativeReward());
+            car.GetComponent<DriveAgentM3>().EndEpisode();
         }
     }
 
@@ -107,9 +107,13 @@ public class RaceTrainManager : MonoBehaviour
     {
         foreach (GameObject car in cars)
         {
-            if (car.GetComponent<DriveAgentM2>() != null) 
+            if (car.GetComponent<DriveAgentM2>() != null)
             {
                 car.GetComponent<DriveAgentM2>().SetTrainManager(this);
+            }
+            else if (car.GetComponent<DriveAgentM3>() != null)
+            {
+                car.GetComponent<DriveAgentM3>().SetTrainManager(this);
             }
         }
     }

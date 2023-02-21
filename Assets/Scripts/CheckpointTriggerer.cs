@@ -20,6 +20,9 @@ public class CheckpointTriggerer : MonoBehaviour
 
     public int episodeStep = 50;
 
+    public int raceLaps = 3;
+    public int currentLap = 0;
+
     void Start()
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
@@ -44,10 +47,6 @@ public class CheckpointTriggerer : MonoBehaviour
 
     void FixedUpdate()
     {   
-        if (points == checkpoints.Length)
-        {
-            points = 0;
-        }
         // distance to next checkpoint
         distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[points].transform.position);
     }
@@ -56,13 +55,17 @@ public class CheckpointTriggerer : MonoBehaviour
     {      
         // sums points only if the object that enters the trigger is a checkpoint and it accords to the points counter
         if (other.gameObject.tag == "Checkpoint" && other.gameObject == checkpoints[points])
-        {
+        {  
             // add reward to the agent
-            if (points == finishLineCheckpointIndex)
+            if (currentLap == raceLaps)
+            {
+                driveAgent.RaceCompleted();
+            }
+            if (points == finishLineCheckpointIndex - 1)
             {
                 points = 0;
-                // FIXME hay codigo repetido pero hasta que no funcionen los puntos queda asi
                 driveAgent.LapCompleted();
+                currentLap++;
             } else {
                 points++;
                 driveAgent.OnCheckpointReached();

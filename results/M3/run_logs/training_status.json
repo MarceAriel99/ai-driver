@@ -2,22 +2,58 @@
     "Drive": {
         "checkpoints": [
             {
-                "steps": 311535,
-                "file_path": "results\\M3\\Drive\\Drive-311535.onnx",
-                "reward": -1.7266403958201408,
-                "creation_time": 1676677825.2240827,
+                "steps": 21999953,
+                "file_path": "results\\M3\\Drive\\Drive-21999953.onnx",
+                "reward": 374.25395303964615,
+                "creation_time": 1676949459.1234105,
                 "auxillary_file_paths": [
-                    "results\\M3\\Drive\\Drive-311535.pt"
+                    "results\\M3\\Drive\\Drive-21999953.pt"
+                ]
+            },
+            {
+                "steps": 22499989,
+                "file_path": "results\\M3\\Drive\\Drive-22499989.onnx",
+                "reward": null,
+                "creation_time": 1676950001.2282698,
+                "auxillary_file_paths": [
+                    "results\\M3\\Drive\\Drive-22499989.pt"
+                ]
+            },
+            {
+                "steps": 22999970,
+                "file_path": "results\\M3\\Drive\\Drive-22999970.onnx",
+                "reward": null,
+                "creation_time": 1676950559.2771444,
+                "auxillary_file_paths": [
+                    "results\\M3\\Drive\\Drive-22999970.pt"
+                ]
+            },
+            {
+                "steps": 23499996,
+                "file_path": "results\\M3\\Drive\\Drive-23499996.onnx",
+                "reward": null,
+                "creation_time": 1676951140.2453568,
+                "auxillary_file_paths": [
+                    "results\\M3\\Drive\\Drive-23499996.pt"
+                ]
+            },
+            {
+                "steps": 23630549,
+                "file_path": "results\\M3\\Drive\\Drive-23630549.onnx",
+                "reward": 361.8369335558485,
+                "creation_time": 1676951361.831967,
+                "auxillary_file_paths": [
+                    "results\\M3\\Drive\\Drive-23630549.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 311535,
+            "steps": 23630549,
             "file_path": "results\\M3\\Drive.onnx",
-            "reward": -1.7266403958201408,
-            "creation_time": 1676677825.2240827,
+            "reward": 361.8369335558485,
+            "creation_time": 1676951361.831967,
             "auxillary_file_paths": [
-                "results\\M3\\Drive\\Drive-311535.pt"
+                "results\\M3\\Drive\\Drive-23630549.pt"
             ]
         }
     },
