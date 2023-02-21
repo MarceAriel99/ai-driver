@@ -2,58 +2,58 @@
     "Drive": {
         "checkpoints": [
             {
-                "steps": 21999953,
-                "file_path": "results\\M3\\Drive\\Drive-21999953.onnx",
-                "reward": 374.25395303964615,
-                "creation_time": 1676949459.1234105,
+                "steps": 27499989,
+                "file_path": "results\\M3\\Drive\\Drive-27499989.onnx",
+                "reward": 277.7384088039398,
+                "creation_time": 1677012999.0984488,
                 "auxillary_file_paths": [
-                    "results\\M3\\Drive\\Drive-21999953.pt"
+                    "results\\M3\\Drive\\Drive-27499989.pt"
                 ]
             },
             {
-                "steps": 22499989,
-                "file_path": "results\\M3\\Drive\\Drive-22499989.onnx",
+                "steps": 27999984,
+                "file_path": "results\\M3\\Drive\\Drive-27999984.onnx",
+                "reward": 408.6875134110451,
+                "creation_time": 1677013550.8587315,
+                "auxillary_file_paths": [
+                    "results\\M3\\Drive\\Drive-27999984.pt"
+                ]
+            },
+            {
+                "steps": 28499952,
+                "file_path": "results\\M3\\Drive\\Drive-28499952.onnx",
                 "reward": null,
-                "creation_time": 1676950001.2282698,
+                "creation_time": 1677014102.2972407,
                 "auxillary_file_paths": [
-                    "results\\M3\\Drive\\Drive-22499989.pt"
+                    "results\\M3\\Drive\\Drive-28499952.pt"
                 ]
             },
             {
-                "steps": 22999970,
-                "file_path": "results\\M3\\Drive\\Drive-22999970.onnx",
-                "reward": null,
-                "creation_time": 1676950559.2771444,
+                "steps": 28999969,
+                "file_path": "results\\M3\\Drive\\Drive-28999969.onnx",
+                "reward": 919.311473441124,
+                "creation_time": 1677014644.886261,
                 "auxillary_file_paths": [
-                    "results\\M3\\Drive\\Drive-22999970.pt"
+                    "results\\M3\\Drive\\Drive-28999969.pt"
                 ]
             },
             {
-                "steps": 23499996,
-                "file_path": "results\\M3\\Drive\\Drive-23499996.onnx",
-                "reward": null,
-                "creation_time": 1676951140.2453568,
+                "steps": 29104797,
+                "file_path": "results\\M3\\Drive\\Drive-29104797.onnx",
+                "reward": 935.3199782833457,
+                "creation_time": 1677014776.2691083,
                 "auxillary_file_paths": [
-                    "results\\M3\\Drive\\Drive-23499996.pt"
-                ]
-            },
-            {
-                "steps": 23630549,
-                "file_path": "results\\M3\\Drive\\Drive-23630549.onnx",
-                "reward": 361.8369335558485,
-                "creation_time": 1676951361.831967,
-                "auxillary_file_paths": [
-                    "results\\M3\\Drive\\Drive-23630549.pt"
+                    "results\\M3\\Drive\\Drive-29104797.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 23630549,
+            "steps": 29104797,
             "file_path": "results\\M3\\Drive.onnx",
-            "reward": 361.8369335558485,
-            "creation_time": 1676951361.831967,
+            "reward": 935.3199782833457,
+            "creation_time": 1677014776.2691083,
             "auxillary_file_paths": [
-                "results\\M3\\Drive\\Drive-23630549.pt"
+                "results\\M3\\Drive\\Drive-29104797.pt"
             ]
         }
     },
