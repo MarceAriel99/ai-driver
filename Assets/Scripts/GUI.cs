@@ -1,9 +1,13 @@
+using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class GUI : MonoBehaviour
 {
+    GameObject player;
+    DriveAgentM2 agent;
+    CarController controller;
     private int gearst = 0;
     private float needleAngle = -150;
 
@@ -11,12 +15,16 @@ public class GUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.Find("PlayerCar");
+        agent = player.GetComponent<DriveAgentM2>();
+        controller = player.GetComponent<CarController>();
+        Debug.Log("players: " + agent.raceTrainManager.ToString());
     }
 
     void FixedUpdate()
     {
         ShowCarUI();
+        UpdatePosition();
     }
 
     public void ShowCarUI()
@@ -25,8 +33,6 @@ public class GUI : MonoBehaviour
         TextMeshProUGUI speedText = GameObject.Find("SpeedText").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI gearText = GameObject.Find("GearText").GetComponent<TextMeshProUGUI>();
         
-        GameObject player = GameObject.Find("Car (Model 2) (2)");
-        CarController controller = player.GetComponent<CarController>();
         
         gearst = controller.CurrentGear;
 
@@ -50,5 +56,26 @@ public class GUI : MonoBehaviour
         needleAngle = (controller.EngineRPM / 20) - 175;
         needleAngle = Mathf.Clamp(needleAngle, -180, 90);
         needle.GetComponent<Image>().rectTransform.rotation = Quaternion.Euler(0, 0, -needleAngle);
+    }
+
+    public void UpdatePosition()
+    {
+        TextMeshProUGUI positionText = GameObject.Find("PositionInRaceText").GetComponent<TextMeshProUGUI>();
+        int position = agent.raceTrainManager.GetCarPosition(player);
+        switch (position)
+        {
+            case 1:
+                positionText.text = "1st Position";
+                break;
+            case 2:
+                positionText.text = "2nd Position";
+                break;
+            case 3:
+                positionText.text = "3rd Position";
+                break;
+            default:
+                positionText.text = position + "th Position";
+                break;
+        }
     }
 }
