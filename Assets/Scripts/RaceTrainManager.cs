@@ -21,13 +21,6 @@ public class RaceTrainManager : MonoBehaviour
     {
         // TODO: Change this method if we paralelize the training
         cars = GameObject.FindGameObjectsWithTag("Car");
-        // prints every car name
-        Debug.Log("Cars in the scene: ");
-        foreach (GameObject car in cars)
-        {
-            Debug.Log(car.name);
-        }
-        Debug.Log("End of cars in the scene");
         carsPositions = new Dictionary<GameObject, int>();
         carsCurrentCheckpoints = new Dictionary<GameObject, int>();
         SetRaceTrainManagerForAllCars();
@@ -37,13 +30,10 @@ public class RaceTrainManager : MonoBehaviour
     void FixedUpdate()
     {
         UpdateCarsPositions();
-        Debug.Log("DEBUG list contains PlayerCar: " + cars.Contains(GameObject.Find("PlayerCar")));
-        Debug.Log("DEBUG dict contains PlayerCar: " + carsPositions.ContainsKey(GameObject.Find("PlayerCar")));
-
-        foreach (KeyValuePair<GameObject, int> carPosition in carsPositions)
-        {
-            Debug.Log(carPosition.Key.name + " is in position " + carPosition.Value);
-        }
+        // foreach (KeyValuePair<GameObject, int> carPosition in carsPositions)
+        // {
+        //     Debug.Log(carPosition.Key.name + " is in position " + carPosition.Value);
+        // }
     }
 
     void UpdateCarsPositions()
@@ -84,7 +74,7 @@ public class RaceTrainManager : MonoBehaviour
             if (car.GetComponent<DriveAgentM2>() != null){
                 car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
                 carsPositions[car] = carCurrentPosition;
-            }  
+            }
         }
     }
 

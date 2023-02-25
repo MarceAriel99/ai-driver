@@ -18,7 +18,6 @@ public class GUI : MonoBehaviour
         player = GameObject.Find("PlayerCar");
         agent = player.GetComponent<DriveAgentM2>();
         controller = player.GetComponent<CarController>();
-        Debug.Log("players: " + agent.raceTrainManager.ToString());
     }
 
     void FixedUpdate()
@@ -59,7 +58,11 @@ public class GUI : MonoBehaviour
     }
 
     public void UpdatePosition()
-    {
+    {   
+        if(agent.raceTrainManager.carsPositions.Count == 0)
+        {
+            return;
+        }
         TextMeshProUGUI positionText = GameObject.Find("PositionInRaceText").GetComponent<TextMeshProUGUI>();
         int position = agent.raceTrainManager.GetCarPosition(player);
         switch (position)
