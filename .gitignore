@@ -71,6 +71,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Timers
+/[Aa]ssets/ML-Agents/Timers
+
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
