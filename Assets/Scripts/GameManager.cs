@@ -3,11 +3,13 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject pauseMenu;
-    public GameObject countdown;
+    public GameObject CountDown;
+    public AnimationClip CountdownClip;
 
     public void Start()
     {
@@ -28,14 +30,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
-        
-    }
-
-    public void ResumeGame()
-    {
-        pauseMenu.SetActive(false);
-        ShowCountdown();
-        Time.timeScale = 1;
     }
 
     public void RestartGame()
@@ -44,12 +38,26 @@ public class GameManager : MonoBehaviour
         ResumeGame();
     }
 
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        //ShowCountdown(); //FIXME: this is not working
+        Time.timeScale = 1;
+    }
+
     public void ShowCountdown()
     {
         Debug.Log("Showing countdown");
         Cursor.visible = false;
-        countdown.SetActive(true);
-        countdown.GetComponent<Animator>().Play("Base Layer.Countdown", 0, 0f);
-        countdown.SetActive(false);
+        CountDown.SetActive(true);
+        CountDown.GetComponent<Animator>().Play("Countdown");
+        StartCoroutine(DisableCountdown());
+    }
+
+    IEnumerator DisableCountdown()
+    {
+        yield return new WaitForSeconds(CountdownClip.length-0.2f);
+        CountDown.SetActive(false);
+        Time.timeScale = 1;
     }
 }

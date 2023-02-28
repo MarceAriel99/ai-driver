@@ -19,7 +19,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        // use RestartGame() from GameManager.cs
+        FindObjectOfType<GameManager>().RestartGame();
     }
 
     public void QuitGame()
