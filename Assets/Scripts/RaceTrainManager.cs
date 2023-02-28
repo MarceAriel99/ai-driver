@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -29,11 +30,10 @@ public class RaceTrainManager : MonoBehaviour
     void FixedUpdate()
     {
         UpdateCarsPositions();
-
-        foreach (KeyValuePair<GameObject, int> carPosition in carsPositions)
-        {
-            Debug.Log(carPosition.Key.name + " is in position " + carPosition.Value);
-        }
+        // foreach (KeyValuePair<GameObject, int> carPosition in carsPositions)
+        // {
+        //     Debug.Log(carPosition.Key.name + " is in position " + carPosition.Value);
+        // }
     }
 
     void UpdateCarsPositions()
@@ -73,7 +73,8 @@ public class RaceTrainManager : MonoBehaviour
             // If the car has this component, set it's position
             if (car.GetComponent<DriveAgentM2>() != null){
                 car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
-            }  
+                carsPositions[car] = carCurrentPosition;
+            }
         }
     }
 
@@ -121,5 +122,10 @@ public class RaceTrainManager : MonoBehaviour
         {
             car.GetComponent<CheckpointTriggerer>().finishLineCheckpointIndex = finishLineCheckpointIndex;
         }
+    }
+
+    public int GetCarPosition(GameObject car)
+    {
+        return carsPositions[car];
     }
 }
