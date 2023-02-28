@@ -24,6 +24,8 @@ public class GUI : MonoBehaviour
     {
         ShowCarUI();
         UpdatePosition();
+        Debug.Log("GEAR: " + controller.CurrentGear);
+        Debug.Log("RPM: " + controller.EngineRPM);
     }
 
     public void ShowCarUI()
@@ -52,8 +54,7 @@ public class GUI : MonoBehaviour
             gearText.text = "N";
         }
 
-        needleAngle = (controller.EngineRPM / 20) - 175;
-        needleAngle = Mathf.Clamp(needleAngle, -180, 90);
+        needleAngle = (controller.EngineRPM / 33.33f) - 180;
         needle.GetComponent<Image>().rectTransform.rotation = Quaternion.Euler(0, 0, -needleAngle);
     }
 
