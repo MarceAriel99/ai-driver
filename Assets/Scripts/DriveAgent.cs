@@ -26,6 +26,7 @@ public abstract class DriveAgent : Agent
     /* ABSTRACT METHODS */
 
     public abstract void LapCompleted();
+    public abstract void RaceCompleted();
     public abstract void OnCheckpointReached();
 
     /* AGENT OVERRIDES */

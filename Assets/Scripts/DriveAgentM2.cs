@@ -139,6 +139,11 @@ public class DriveAgentM2 : DriveAgent
         //raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
 
+    public override void RaceCompleted()
+    {
+        throw new System.NotImplementedException();
+    }
+
     /* AGENT OVERRIDES */
     public override void CollectObservations(VectorSensor sensor)
     {
