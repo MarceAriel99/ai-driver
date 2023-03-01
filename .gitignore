@@ -72,7 +72,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Timers
-/[Aa]ssets/[Mm]L-Agents/*
+/[Aa]ssets/ML-Agents/*
 
 # Windows thumbnail cache files
 Thumbs.db
