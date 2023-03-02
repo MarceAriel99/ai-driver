@@ -10,7 +10,7 @@ public class CheckpointTriggerer : MonoBehaviour
     // points counter variable
     public int points = 0;
 
-    public DriveAgent driveAgent;
+    public DriveAgentInterface driveAgent;
 
     public GameObject[] checkpoints;
 
@@ -26,24 +26,8 @@ public class CheckpointTriggerer : MonoBehaviour
     void Start()
     {
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        driveAgent = GetComponent<DriveAgent>(); // FIXME: esto esta bien o deberia ser M2?
+        driveAgent = GetComponent<DriveAgentInterface>();
     }
-
-    /*
-    private int GetFinishLineCheckpointIndex(int completedEpisodes)
-    {
-        // there is one finish line every 5 checkpoints and move finish line forwards when they complete the race 'episodeStep' times
-
-        int finishLineCheckpointIndex = ((int)math.floor(completedEpisodes / episodeStep)) * 1;
-
-        if (finishLineCheckpointIndex > checkpoints.Length)
-        {
-            finishLineCheckpointIndex = checkpoints.Length;
-        }
-
-        return finishLineCheckpointIndex;
-    }
-    */
 
     void FixedUpdate()
     {   

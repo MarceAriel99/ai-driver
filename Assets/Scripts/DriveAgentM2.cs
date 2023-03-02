@@ -19,8 +19,6 @@ public class DriveAgentM2 : DriveAgent
     
     public int wheelsOnTrack = 0;
 
-    public RaceTrainManager raceTrainManager;
-
     public float normalizedVelocity;
     public float normalizedAngularVelocity;
     public float normalizedPosition;

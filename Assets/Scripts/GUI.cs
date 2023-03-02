@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GUI : MonoBehaviour
 {
     GameObject player;
-    DriveAgentM2 agent;
+    DriveAgentInterface agent;
     CarController controller;
     private int gearst = 0;
     private float needleAngle = -150;
@@ -16,7 +16,7 @@ public class GUI : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("PlayerCar");
-        agent = player.GetComponent<DriveAgentM2>();
+        agent = player.GetComponent<PlayerManager>();
         controller = player.GetComponent<CarController>();
     }
 
@@ -24,8 +24,8 @@ public class GUI : MonoBehaviour
     {
         ShowCarUI();
         UpdatePosition();
-        Debug.Log("GEAR: " + controller.CurrentGear);
-        Debug.Log("RPM: " + controller.EngineRPM);
+        // Debug.Log("GEAR: " + controller.CurrentGear);
+        // Debug.Log("RPM: " + controller.EngineRPM);
     }
 
     public void ShowCarUI()

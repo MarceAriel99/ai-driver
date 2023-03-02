@@ -4,7 +4,14 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 
-public abstract class DriveAgent : Agent
+public interface DriveAgentInterface
+{
+    RaceTrainManager raceTrainManager { get; set; }
+    void LapCompleted();
+    void RaceCompleted();
+    void OnCheckpointReached();
+}
+public abstract class DriveAgent : Agent, DriveAgentInterface
 {
     protected CarController carController;
     protected GameObject car;
@@ -15,6 +22,7 @@ public abstract class DriveAgent : Agent
 
     public GameObject startPoint;
     
+    public RaceTrainManager raceTrainManager { get; set; }
     void Start()
     {
         car = this.gameObject;
@@ -45,4 +53,6 @@ public abstract class DriveAgent : Agent
         continuousActionsOut[0] = Input.GetAxis("Vertical");
         continuousActionsOut[1] = Input.GetAxis("Horizontal");
     }
+
+
 }

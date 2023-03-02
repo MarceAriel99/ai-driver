@@ -78,6 +78,9 @@ public class RaceTrainManager : MonoBehaviour
                 car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
                 carsPositions[car] = carCurrentPosition;
             }
+            if (car.GetComponent<PlayerManager>() != null){
+                carsPositions[car] = carCurrentPosition;
+            }
         }
     }
 
@@ -97,13 +100,22 @@ public class RaceTrainManager : MonoBehaviour
         }
     }
 
-    public void EndEpisodeForAllAgents(GameObject carCallingThisMethod)
+    public void EndEpisodeForAllAgents(GameObject carCallingThisMethod = null)
     {
         foreach (GameObject car in cars)
         {   
             // Print acumulated reward for every car
-            Debug.Log(car.name + "was resetted because" + carCallingThisMethod.name  + "won. It has acumulated a reward of " + car.GetComponent<DriveAgentM3>().GetCumulativeReward());
-            car.GetComponent<DriveAgentM3>().EndEpisode();
+            if (carCallingThisMethod != null) {
+                Debug.Log(car.name + "was resetted because" + carCallingThisMethod.name  + "won. It has acumulated a reward of " + car.GetComponent<DriveAgentM3>().GetCumulativeReward());
+            }
+
+            DriveAgent agent = car.GetComponent<DriveAgent>();
+            if (agent != null)
+            {
+                agent.EndEpisode();
+            } else {
+                car.GetComponent<PlayerManager>().ResetCar();
+            }
         }
     }
 
@@ -118,6 +130,10 @@ public class RaceTrainManager : MonoBehaviour
             else if (car.GetComponent<DriveAgentM3>() != null)
             {
                 car.GetComponent<DriveAgentM3>().SetTrainManager(this);
+            }
+            else if (car.GetComponent<PlayerManager>() != null)
+            {
+                car.GetComponent<PlayerManager>().SetTrainManager(this);
             }
         }
     }

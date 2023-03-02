@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject CountDown;
     public AnimationClip CountdownClip;
 
+    public RaceTrainManager raceTrainManager;
+
     public void Start()
     {
         Cursor.visible = false;
@@ -34,29 +36,26 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        raceTrainManager.EndEpisodeForAllAgents();
+        // SceneManager.LoadScene("GameScene");
         ResumeGame();
     }
 
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
-        //ShowCountdown(); //FIXME: this is not working
-        Time.timeScale = 1;
+        StartCoroutine(ShowCountdown());
+        // Time.timeScale = 1;
     }
 
-    public void ShowCountdown()
+    IEnumerator ShowCountdown()
     {
         Debug.Log("Showing countdown");
         Cursor.visible = false;
         CountDown.SetActive(true);
         CountDown.GetComponent<Animator>().Play("Countdown");
-        StartCoroutine(DisableCountdown());
-    }
-
-    IEnumerator DisableCountdown()
-    {
-        yield return new WaitForSeconds(CountdownClip.length-0.2f);
+        // wait for the animation to finish using unscaled time
+        yield return new WaitForSecondsRealtime(CountdownClip.length-0.2f);
         CountDown.SetActive(false);
         Time.timeScale = 1;
     }
