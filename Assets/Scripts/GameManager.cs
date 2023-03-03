@@ -11,11 +11,17 @@ public class GameManager : MonoBehaviour
     public GameObject CountDown;
     public AnimationClip CountdownClip;
 
+    public Cinemachine.CinemachineVirtualCamera playerCamera;
+
+    public Vector3 cameraStartPosition;
+    public Quaternion cameraStartRotation;
+
     public RaceTrainManager raceTrainManager;
 
     public void Start()
     {
         Cursor.visible = false;
+        GetCameraStartPositionAndRotation();
     }
 
     public void Update()
@@ -37,15 +43,16 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         raceTrainManager.EndEpisodeForAllAgents();
-        // SceneManager.LoadScene("GameScene");
+        Debug.Log("Moving camera back to start position at " + cameraStartPosition + " and rotation " + cameraStartRotation);
+        playerCamera.ForceCameraPosition(cameraStartPosition, cameraStartRotation);
         ResumeGame();
     }
 
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
+        Debug.Log("Resuming game");
         StartCoroutine(ShowCountdown());
-        // Time.timeScale = 1;
     }
 
     IEnumerator ShowCountdown()
@@ -58,5 +65,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(CountdownClip.length-0.2f);
         CountDown.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void GetCameraStartPositionAndRotation()
+    {
+        cameraStartPosition = playerCamera.transform.position;
+        cameraStartRotation = playerCamera.transform.rotation;
     }
 }

@@ -68,6 +68,6 @@ public class PlayerManager : MonoBehaviour, DriveAgentInterface
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         checkpointTriggerer.points = 0;
-        checkpointTriggerer.currentLap = 0;
+        checkpointTriggerer.currentLap = 0;  
     }
 }
