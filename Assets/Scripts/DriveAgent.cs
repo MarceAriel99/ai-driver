@@ -10,6 +10,7 @@ public interface DriveAgentInterface
     void LapCompleted();
     void RaceCompleted();
     void OnCheckpointReached();
+    void SetTrainManager(RaceTrainManager raceTrainManager);
 }
 public abstract class DriveAgent : Agent, DriveAgentInterface
 {
@@ -36,6 +37,7 @@ public abstract class DriveAgent : Agent, DriveAgentInterface
     public abstract void LapCompleted();
     public abstract void RaceCompleted();
     public abstract void OnCheckpointReached();
+    public abstract void SetTrainManager(RaceTrainManager raceTrainManager);
 
     /* AGENT OVERRIDES */
 

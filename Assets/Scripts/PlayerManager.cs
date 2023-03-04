@@ -28,19 +28,19 @@ public class PlayerManager : MonoBehaviour, DriveAgentInterface
 
     public void OnCheckpointReached()
     {
-        Debug.Log("Player reached a checkpoint.");
+        //Debug.Log("Player reached a checkpoint.");
     }
 
     public void LapCompleted()
     {
         Debug.Log("Player completed a lap.");
         raceTrainManager.LapCompleted();
-        RaceCompleted();
+        //RaceCompleted();
     }
 
     public void RaceCompleted()
     {
-        throw new System.NotImplementedException();
+        raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
 
     public void Start()

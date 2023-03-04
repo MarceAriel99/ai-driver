@@ -131,15 +131,16 @@ public class DriveAgentM2 : DriveAgent
     {
         // Add reward for completing a lap and end episode for all agents
         AddReward(5f);
-        Debug.Log("Car" + transform.gameObject.name + " completed a lap. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
+        //Debug.Log("Car" + transform.gameObject.name + " completed a lap. Ending episode with a cummulative reward of " + GetCumulativeReward() + ".");
         raceTrainManager.LapCompleted();
-        EndEpisode();
+        //EndEpisode();
         //raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
 
     public override void RaceCompleted()
     {
-        throw new System.NotImplementedException();
+        AddReward(50f);
+        raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
 
     /* AGENT OVERRIDES */
@@ -180,6 +181,7 @@ public class DriveAgentM2 : DriveAgent
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         this.CheckpointTriggerer.points = 0;
+        this.CheckpointTriggerer.currentLap = 0;
 
         // Reset timers
         notMovingTimer = 0;
@@ -223,7 +225,7 @@ public class DriveAgentM2 : DriveAgent
         currentPositionNormalized = 1 - ((float)carCurrentPosition / totalCars);
     }
 
-    public void SetTrainManager(RaceTrainManager raceTrainManager)
+    override public void SetTrainManager(RaceTrainManager raceTrainManager)
     {
         this.raceTrainManager = raceTrainManager;
     }

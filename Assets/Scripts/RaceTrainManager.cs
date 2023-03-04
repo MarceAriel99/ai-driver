@@ -30,10 +30,6 @@ public class RaceTrainManager : MonoBehaviour
     void FixedUpdate()
     {
         UpdateCarsPositions();
-        // foreach (KeyValuePair<GameObject, int> carPosition in carsPositions)
-        // {
-        //     Debug.Log(carPosition.Key.name + " is in position " + carPosition.Value);
-        // }
     }
 
     void UpdateCarsPositions()
@@ -43,6 +39,8 @@ public class RaceTrainManager : MonoBehaviour
         {
             // Get the current checkpoint of the car
             int carCurrentCheckpoint = car.GetComponent<CheckpointTriggerer>().points;
+            // Get the current lap of the car
+            int carCurrentLap = car.GetComponent<CheckpointTriggerer>().currentLap;
             int carCurrentPosition = 1;
 
             // For each other car, check if it is in a higher position than the current car
@@ -50,16 +48,22 @@ public class RaceTrainManager : MonoBehaviour
             {
                 if (otherCar != car)
                 {
+                    // Get the current checkpoint of the other car
                     int otherCarCurrentCheckpoint = otherCar.GetComponent<CheckpointTriggerer>().points;
+                    // Get the current lap of the other car
+                    int otherCarCurrentLap = otherCar.GetComponent<CheckpointTriggerer>().currentLap;
 
-                    // If the other car is in a higher checkpoint, the current car is in a lower position
-                    if (otherCarCurrentCheckpoint > carCurrentCheckpoint)
+                    // If the other car is in a higher lap, it is in a higher position
+                    if (otherCarCurrentLap > carCurrentLap)
                     {
                         carCurrentPosition++;
                     }
-
-                    // If the other car is in the same checkpoint, check the distance to the next checkpoint
-                    else if (otherCarCurrentCheckpoint == carCurrentCheckpoint)
+                    // If the other car is in the same lap, check if it is in a higher checkpoint
+                    else if (otherCarCurrentLap == carCurrentLap && otherCarCurrentCheckpoint > carCurrentCheckpoint){
+                        carCurrentPosition++;
+                    }
+                    // If the other car is in the same checkpoint and lap, check the distance to the next checkpoint
+                    else if (otherCarCurrentLap == carCurrentLap && otherCarCurrentCheckpoint == carCurrentCheckpoint)
                     {   
                         // If the other car is closer to the next checkpoint, the current car is in a lower position
                         if (otherCar.GetComponent<CheckpointTriggerer>().distanceToNextCheckpoint < car.GetComponent<CheckpointTriggerer>().distanceToNextCheckpoint)
@@ -69,18 +73,17 @@ public class RaceTrainManager : MonoBehaviour
                     }
                 }
             }
-            // This component should be cached
+
             // If the car has this component, set it's position
             if (car.GetComponent<DriveAgentM3>() != null){
                 car.GetComponent<DriveAgentM3>().SetPosition(carCurrentPosition, cars.Length);
             }  
             if (car.GetComponent<DriveAgentM2>() != null){
                 car.GetComponent<DriveAgentM2>().SetPosition(carCurrentPosition, cars.Length);
-                carsPositions[car] = carCurrentPosition;
             }
             if (car.GetComponent<PlayerManager>() != null){
-                carsPositions[car] = carCurrentPosition;
             }
+            carsPositions[car] = carCurrentPosition;
         }
     }
 
@@ -106,7 +109,7 @@ public class RaceTrainManager : MonoBehaviour
         {   
             // Print acumulated reward for every car
             if (carCallingThisMethod != null) {
-                Debug.Log(car.name + "was resetted because" + carCallingThisMethod.name  + "won. It has acumulated a reward of " + car.GetComponent<DriveAgentM3>().GetCumulativeReward());
+                Debug.Log(car.name + "was resetted because " + carCallingThisMethod.name  + " won");
             }
 
             DriveAgent agent = car.GetComponent<DriveAgent>();
@@ -122,19 +125,8 @@ public class RaceTrainManager : MonoBehaviour
     void SetRaceTrainManagerForAllCars()
     {
         foreach (GameObject car in cars)
-        {
-            if (car.GetComponent<DriveAgentM2>() != null)
-            {
-                car.GetComponent<DriveAgentM2>().SetTrainManager(this);
-            }
-            else if (car.GetComponent<DriveAgentM3>() != null)
-            {
-                car.GetComponent<DriveAgentM3>().SetTrainManager(this);
-            }
-            else if (car.GetComponent<PlayerManager>() != null)
-            {
-                car.GetComponent<PlayerManager>().SetTrainManager(this);
-            }
+        {   
+            car.GetComponent<DriveAgentInterface>().SetTrainManager(this);
         }
     }
 

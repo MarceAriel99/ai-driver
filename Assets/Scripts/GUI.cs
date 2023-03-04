@@ -66,19 +66,20 @@ public class GUI : MonoBehaviour
         }
         TextMeshProUGUI positionText = GameObject.Find("PositionInRaceText").GetComponent<TextMeshProUGUI>();
         int position = agent.raceTrainManager.GetCarPosition(player);
+        string position_text = " Position: " + position;
         switch (position)
         {
             case 1:
-                positionText.text = "1st Position";
+                positionText.text = position_text + "st";
                 break;
             case 2:
-                positionText.text = "2nd Position";
+                positionText.text = position_text + "nd";
                 break;
             case 3:
-                positionText.text = "3rd Position";
+                positionText.text = position_text + "rd";
                 break;
             default:
-                positionText.text = position + "th Position";
+                positionText.text = position_text + "th";
                 break;
         }
     }

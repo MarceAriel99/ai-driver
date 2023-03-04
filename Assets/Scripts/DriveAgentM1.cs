@@ -29,12 +29,14 @@ public class DriveAgentM1 : DriveAgent
     {
         //Debug.Log("Lap completed");
         AddReward(50f);
-        EndEpisode();
+        raceTrainManager.LapCompleted();
+        //EndEpisode();
     }
 
     public override void RaceCompleted()
     {
-        throw new System.NotImplementedException();
+        AddReward(50f);
+        raceTrainManager.EndEpisodeForAllAgents(transform.gameObject);
     }
 
     /* AGENT OVERRIDES */
@@ -111,5 +113,10 @@ public class DriveAgentM1 : DriveAgent
         {
             AddReward(reward);
         }
+    }
+
+    override public void SetTrainManager(RaceTrainManager raceTrainManager)
+    {
+        this.raceTrainManager = raceTrainManager;
     }
 }
