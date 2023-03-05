@@ -4,11 +4,13 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-//[ExecuteInEditMode]
+[ExecuteInEditMode]
 public class checkpoints_prefabs : MonoBehaviour
 {
     public GameObject checkpoint;
     public List<GameObject> checkpoint_list = new List<GameObject>();
+
+    public bool reverse = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,11 @@ public class checkpoints_prefabs : MonoBehaviour
         foreach (Transform child in transform)
         {
             checkpoint_list.Add(child.gameObject);
+        }
+
+        if (reverse)
+        {
+            checkpoint_list.Reverse();
         }
 
         foreach (GameObject checkpoint in checkpoint_list)
