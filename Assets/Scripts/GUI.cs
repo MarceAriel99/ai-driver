@@ -11,6 +11,8 @@ public class GUI : MonoBehaviour
     private int gearst = 0;
     private float needleAngle = -150;
 
+    Int16 lap = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,9 +35,10 @@ public class GUI : MonoBehaviour
         GameObject needle = GameObject.Find("Needle");
         TextMeshProUGUI speedText = GameObject.Find("SpeedText").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI gearText = GameObject.Find("GearText").GetComponent<TextMeshProUGUI>();
-        
+        TextMeshProUGUI lapText = GameObject.Find("LapText").GetComponent<TextMeshProUGUI>();
         
         gearst = controller.CurrentGear;
+        lapText.text = "Lap " + lap;
 
         speedText.text = controller.SpeedInHour.ToString("000");
         if (gearst > 0 && controller.CurrentSpeed > 1)
@@ -82,5 +85,10 @@ public class GUI : MonoBehaviour
                 positionText.text = position_text + "th";
                 break;
         }
+    }
+
+    public void UpdateLap()
+    {
+        lap++;
     }
 }

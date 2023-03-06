@@ -35,6 +35,7 @@ public class PlayerManager : MonoBehaviour, DriveAgentInterface
     {
         Debug.Log("Player completed a lap.");
         raceTrainManager.LapCompleted();
+        GameObject.Find("GUI").GetComponent<GUI>().UpdateLap();;	
         //RaceCompleted();
     }
 
