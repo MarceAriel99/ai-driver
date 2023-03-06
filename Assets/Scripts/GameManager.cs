@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
+        // mute the audio
+        AudioListener.pause = true;
         pauseMenu.SetActive(true);
     }
 
@@ -65,6 +67,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(CountdownClip.length-0.2f);
         CountDown.SetActive(false);
         Time.timeScale = 1;
+        // unmute the audio
+        AudioListener.pause = false;
     }
 
     public void GetCameraStartPositionAndRotation()
