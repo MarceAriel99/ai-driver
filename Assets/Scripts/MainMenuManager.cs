@@ -19,12 +19,14 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        // use RestartGame() from GameManager.cs
-        FindObjectOfType<GameManager>().RestartGame();
+        // call RestartGame() from GameManager.cs
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void QuitGame()
     {
         Application.Quit();
     }
+
+
 }

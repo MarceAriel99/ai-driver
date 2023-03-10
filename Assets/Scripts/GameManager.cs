@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         GetCameraStartPositionAndRotation();
+        Time.timeScale = 0;
+        AudioListener.pause = true;
+        // wait for 1 second before showing the countdown
+
+        StartCoroutine(ShowCountdown(2));
     }
 
     public void Update()
@@ -57,8 +62,9 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ShowCountdown());
     }
 
-    IEnumerator ShowCountdown()
+    IEnumerator ShowCountdown(int waitSeconds = 0)
     {
+        if (waitSeconds > 0) {yield return new WaitForSecondsRealtime(waitSeconds);}
         Debug.Log("Showing countdown");
         Cursor.visible = false;
         CountDown.SetActive(true);
