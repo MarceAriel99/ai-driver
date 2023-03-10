@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = true;
         // wait for 1 second before showing the countdown
 
-        StartCoroutine(ShowCountdown(2));
+        StartCoroutine(ShowCountdown(1));
     }
 
     public void Update()
